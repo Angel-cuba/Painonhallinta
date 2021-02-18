@@ -62,6 +62,9 @@ def on_jarkeva(syote, alaraja, ylaraja):
     # Palautetaan luku
     return luku
 
- # Testataan toimintaa
+# Jos sanity.py-tiedostoa ajetaan terminaalissa, suoritetaan testit
+if __name__ == '__main__':
+
+    # Testataan toimintaa
     tulos = on_jarkeva('sata', 1, 500)
-    print(tulos)
+    print(tulos)    
