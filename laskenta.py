@@ -13,5 +13,5 @@ def bmi(paino, pituus):
     Returns:
         float: painoindeksi
     """
-    painoindeksi = paino / pituus**2
-    return painoindeksi()
+    painoindeksi = paino / pituus ** 2
+    return painoindeksi

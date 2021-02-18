@@ -43,7 +43,7 @@ def on_jarkeva(syote, alaraja, ylaraja):
     try:
         luku = float(korjattu_syote)
     except:
-        print('An exception occurred, just numbers')
+        print('Syötetyssä tiedossa on ylimääräisiä merkkejä, vain numerot sallittu')
         luku = 0
     # Tarkistetaan, ettei syöte ole alarajan alapuolella
     try:
