@@ -90,24 +90,58 @@ def liukuluku_ok(syote, alaraja, ylaraja):
 
     # Jos desimaalipiste löytyy, jaetaan pisteen kohdalta erilliiisiksi, merkijo
     if pisteenpaikka != -1:
-        osat = numeroarvo.split('.')
+        osat = numeroarvo.split('.') # Syntyy lista osista 
         osien_maara = len(osat)
+        # Selvitetään onko osia enenmän kuin 2 so. liika pilkkuja tai pisteitä
         if osien_maara > 2:
             virhekoodi = 1
-            virhesanoma = "Syöttessä on useita desimaalipisteitä tai useita arvoja: vain yksi liukuluku on sallittu"
+            virhesanoma = "Syöttessä on useita desimaalipisteitä tai useita arvoja: vain yksi liukuluku on sallittu, esim. 12.3"
             arvo = 0 
         #TODO: tee osien numeerisuus testi valmisiksi
-        # elif condition:
-            
-    tulokset = None
+        # Muussa tapauksessa selvitetään onko alkuosassa pelkkiä numeroita
+        else:
+            osa = str(osat[0])
+            if osa.isnumeric() == False:
+                virhekoodi = 2
+                virhesanoma = "Syöte sisältää teksiä, ainoastaan numerot ja desimaalipiste ovat sallittuja, esim. 123.5"
+                arvo = 0
+            #
+            else:
+                osa = str(osat[1])
+                if osa.isnumeric() == False:
+                 virhekoodi = 2
+                 virhesanoma = "Syöte sisältää teksiä, ainoastaan numerot ja desimaalipiste ovat sallittuja, esim. 123.5"
+                #  arvo = 0
+
+    # Jos yksiosainen syöte sisäaltää muutakin kuin pelkkiä numeroita
+    elif numeroarvo.isnumeric() == False:
+        virhekoodi = 2
+        virhesanoma = "Syöte sisältää teksiä, ainoastaan numerot ja desimaalipiste ovat sallittuja, esim. 123.5"
+        arvo = 0
+       # virhekoodi = 0
+        # virhesanoma = "Syöte ok"
+    else:
+        virhekoodi = 0
+        virhesanoma = "Syöte ok"
+        arvo = float(numeroarvo)
+
+
+    # TODO: Muodosta kaksi funktiota: float ja raja-arvotarkistus erillisinä funktioina
+    # 
+    # Muodostetaan ja palautetaan funktion paluuarvo (lista)
+    tulokset = [virhekoodi, virhesanoma, arvo]
     return tulokset
 
 # Jos sanity.py-tiedostoa ajetaan terminaalissa, suoritetaan testit
 if __name__ == '__main__':
 
     # Testataan toimintaa
-    tulos = on_jarkeva('sata', 1, 500)
-    print(tulos)    
+    # tulos = on_jarkeva('sata', 1, 500)
+    #print(tulos)    
 
-syote = '10.5'
-print(syote.strip(), 'kiloa')
+# syote = '10.5'
+# print(syote.strip(), 'kiloa')
+
+    # Testataan 
+    syote = 'sata'
+    print(liukuluku_ok(syöte, 0 , 500))

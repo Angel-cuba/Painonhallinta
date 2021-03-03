@@ -2,7 +2,7 @@
 
 # Kirjastojen ja modulien käyttöönotot
 import sanity
-from laskenta import *
+from laskenta import bmi
 
 # Varsinaisen pääohjelman alku
 
@@ -17,10 +17,13 @@ while True:
     paino = sanity.on_jarkeva(paino_str, 20, 300)
 
     pituus_str = input('Pituus (m)? ')
-    pituus = sanity.on_jarkeva(pituus_str, 1, 3)
+    pituus = sanity.on_jarkeva(pituus_str, 1, 300)
 
-    print('Painoindeksisi on', bmi(paino, pituus))
+    # print('Painoindeksisi on', bmi(paino, pituus))
+    # FIXME: chequear este pedazo............
+    print('Painoindeksisi on', bmi())
+
     # Poistuminen ikuisesta silmukasta
     uusi = input('Lasketaanko uuden henkilön rasvaprosentti? (K/E)')
-    if uusi == 'E':
+    if uusi == 'E' or uusi == 'e':
         break
