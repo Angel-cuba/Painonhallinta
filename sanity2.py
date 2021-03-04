@@ -18,7 +18,7 @@ def liukuluvuksi(syote):
 
     # Selvitetään sisältääko syöte mahdollisen desimaalipilkun ja korvataan se pisteellä
     if syote.find(',') != -1:
-        syote.replace(',', '.')
+        syote.replace(',' , '.')
 
     # Selvitetään sisältääkö syöte desimaalipisteen ja jaetaan syöte pisteen kohdalta useammaksi merkkijonoksi
     if syote.find('.') != -1:
