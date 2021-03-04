@@ -63,23 +63,73 @@ def liukuluvuksi(syote):
     
 # Funktio, jolla tarkistetaan, että syötetty arvo on haluttujen rajojen sisällä
 def rajatarkistus(arvo, alaraja, ylaraja):
-    """Tarkistaa, että syötetty arvo on suurempi tai yhtäsuuri kuin alaraja ja pienempi
-
+    """Tarkistaa, että syötetty arvo on suurempi tai yhtäsuuri kuin alaraja ja pienempi tai yhtäsuuri kuin yläraja
     Args:
-        arvo (float): tarkistettava arvo 
-        alaraja (float): pienin salittu arvo 
-        ylaraja (float): suurin salittu arvo
-
+        arvo (float): tarkistettava arvo
+        alaraja (float): pienin sallittu arvo
+        ylaraja (float): suurin sallittu arvo
     Returns:
         list: virhekoodi, virheilmoitus
     """
-
-    # Määritellään virheiden oletukset
+    # Määritellään virheiden oletusarvot
     virhekoodi = 0
     virhesanoma = 'Arvo OK'
 
+    # Arvo alle alarajan
+    if arvo < alaraja:
+        virhekoodi = 1
+        virhesanoma = 'Arvo on alle alarajan'
+        
+    # Arvo yli ylärajan
+    if arvo > ylaraja:
+        virhekoodi = 2
+        virhesanoma = 'Arvo on yli ylärajan'
+
+    # Paluuarvon määritys ja palautus
     paluuarvo = [virhekoodi, virhesanoma]
     return paluuarvo
-    
 
-      
+# Funktioiden testaus
+if __name__ == '__main__':
+    
+    # 1. Syötteen tarkistus, syöte oikein
+    syote = '123.5'
+    print('Syöte:', syote, 'Tulokset: ', liukuluvuksi(syote))
+
+    # 2. Syötteessä desimaalipilkku, muuten oikein
+    syote = '123,5'
+    print('Syöte:', syote, 'Tulokset: ', liukuluvuksi(syote))
+
+    # 3. Syötteessä useita osia
+    syote = '12.3.2'
+    print('Syöte:', syote, 'Tulokset: ', liukuluvuksi(syote))
+
+    # 4. Syöttessä alussa tekstiä 
+    syote = 'paino 75.4'
+    print('Syöte:', syote, 'Tulokset: ', liukuluvuksi(syote))
+
+    # 5. Syötteen lopussa tekstiä
+    syote = '75.4 kg'
+    print('Syöte:', syote, 'Tulokset: ', liukuluvuksi(syote))
+    # Syöte kokonaisuudessaan tekstiä
+    syote = 'sataviisi'
+    print('Syöte:', syote, 'Tulokset: ', liukuluvuksi(syote))
+    
+    """
+    # Rajatarkistukset
+
+    alaraja = 1
+    ylaraja = 3
+
+    # 1. Rajojen sisällä
+    arvo = 1.8
+    print('Arvo:', arvo, 'Tulokset:', rajatarkistus(arvo, alaraja, ylaraja))
+
+    # 2. Alle alarajan
+    arvo = 0.8
+    print('Arvo:', arvo, 'Tulokset:', rajatarkistus(arvo, alaraja, ylaraja))
+
+    # 3. Yli ylärajan
+    arvo = 1.8
+    print('Arvo:', arvo, 'Tulokset:', rajatarkistus(arvo, alaraja, ylaraja))
+    """
