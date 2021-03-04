@@ -1,44 +1,36 @@
 # Moduli syötteen oikeellisuuden (sanity) tarkistamiseen
+"""Tarkistaa käyttäjän syötteen oikeellisuuden tarkistusfunktioiden avulla
+"""
 
-"""Tarkistaa käyttäjän syötteen oikeellisuuden tarkistusfunktioiden avulla  
-
-        Raises:
-        Exception: [description]
-        Exception: [description]
-
-        Returns:
-        [type]: [description]
-    """
 
 # Funktioiden määrittelyt
-
 def on_jarkeva(syote, alaraja, ylaraja):
     """
-    Puhdistaa merkkijonosta ylimääräiset tulostumattomat merkit ja välilyönnit ja lopusta
-    selvittää onko syötetty arvo annettujen rajojen sisällä Funktio muutta desimaalipilkun
-    desimaalipisteeksi.
-
+    Puhdistaa merkkijonosta ylimääräiset tulostumattomat merkit ja välilyönnit
+    sekä selvittää onko syötetty arvo annettujen rajojen sisällä. 
+    Funktio muutta desimaali pilkun desimaalipisteeksi.
     Args:
         syote (string): Näppäimistöltä syötetty arvo
         alarja (float): pienin sallittu arvo
         ylaraja (float): suurin sallittu arvo
-
-    Returns (float) : Kättäjän syöttämä arvo numeerisena
+    Returns (float) : Käyttäjän syöttämä arvo numeerisena
     """
 
     # Poistetaan whitespace merkit merkkijonon alusta
     puhdistettu_syote = syote.lstrip()
 
-    # Poistetaan whitespace merkit merkkijonon alusta
+    #  Poistetaan whitespace merkit merkkijonon alusta
     puhdistettu_syote = puhdistettu_syote.rstrip()
 
     # Selvitetään onko merkkijonossa pilkku (,)
     pilkunpaikka = puhdistettu_syote.find(',')
-    
-    # Jos pilkku löytty, korvataan pistellä
+
+    # Jos pilkku löytyy, korvataan pisteellä
     if pilkunpaikka != -1:
-       korjattu_syote = puhdistettu_syote.replace(',', '.')
-    
+        korjattu_syote = puhdistettu_syote.replace(',', '.')
+    else:
+      korjattu_syote = puhdistettu_syote
+
     # Muutetaan korjattu syöte merkkijonosta liukuluvuksi
     try:
         luku = float(korjattu_syote)
@@ -52,96 +44,97 @@ def on_jarkeva(syote, alaraja, ylaraja):
     except Exception as virheilmoitus:
         print(virheilmoitus)
 
-    # Tarkistetaan, ettei syöte ole ylärajan yläpuolella          
+    # Tarkistetaan, ettei syöte ole ylärajan yläpuolella
     try:
-        if luku > alaraja:
+        if luku > ylaraja:
             raise Exception('Syöttämäsi arvo on yli sallitun')
     except Exception as virheilmoitus:
         print(virheilmoitus)
-
+    
     # Palautetaan luku
     return luku
-def liukuluku_ok(syote, alaraja, ylaraja):
-    """Tarkistaa syötteen olevan numeerinen ja muuttaa sen liukuluvuksi. Syöttellä on alaraja ja ylaraja 
 
+def liukuluku_ok(syote, alaraja, ylaraja):
+    """Tarkistaa syötteen olevan numeerinen ja muuttaa sen liukuluvuksi. Syötteellä on alaraja ja yläraja
+    
     Args:
-        syote (string): Syöteenä saatu arvo
+        syote (string): Syötteenä saatu arvo
         alaraja (float): pienin hyväksyttävä arvo
         ylaraja (float): suurin hyväksyttävä arvo
-
     Returns:
-        list: Palautaa arvon (float), virhekoodin (int), virhesanoman (string)
+        list: Palauttaa arvon (float), virhekoodin (int), virhesanoman (string)
     """
-
     # Puhdistetaan syötteestä ylimääriset merkit (white space)
     puhdistettumerkkijono = syote.strip()
 
-    # Tutkistaan onko syötteessä pilkku ja etsitään sen paikka
-    pilkkunpaikka = puhdistettumerkkijono.find(',')
+    # Tutkitaan onko syötteessä pilkku ja etsitään sen paikka
+    pilkunpaikka = puhdistettumerkkijono.find(',')
 
     # Jos pilkku löytyi, korvataan pisteellä
-    if pilkkunpaikka != -1: # Jos ei löydy indeksi pn aina -1
-        numeroarvo = puhdistettumerkkijono.replace(',', '.')
+    if pilkunpaikka != -1: # Jos ei löydy indeksi on aina -1
+        numeroarvo = puhdistettumerkkijono.replace(',', '.') # Muutetaan
     else:
-        numeroarvo = puhdistettumerkkijono # ei muutetaan 
+        numeroarvo = puhdistettumerkkijono # ei muuteta
 
-    # Etsitään desimaalipistettä merkkijonnosta
-    pisteenpaikka = numeroarvo.find('.') 
+    # Etsitään desimaalipistettä merkkijonosta
+    pisteenpaikka = numeroarvo.find('.')
 
-    # Jos desimaalipiste löytyy, jaetaan pisteen kohdalta erilliiisiksi, merkijo
+    # Jos desimaalipiste löytyy, jaetaan pisteen kohdalta erillisiksi merkkijoiksi
     if pisteenpaikka != -1:
-        osat = numeroarvo.split('.') # Syntyy lista osista 
+        osat = numeroarvo.split('.') # Syntyy lista osista
         osien_maara = len(osat)
-        # Selvitetään onko osia enenmän kuin 2 so. liika pilkkuja tai pisteitä
+        # Selvitetään onko osia enemmän kuin 2 so. liikaa pilkkuja tai pisteitä
         if osien_maara > 2:
             virhekoodi = 1
-            virhesanoma = "Syöttessä on useita desimaalipisteitä tai useita arvoja: vain yksi liukuluku on sallittu, esim. 12.3"
-            arvo = 0 
-        #TODO: tee osien numeerisuus testi valmisiksi
+            virhesanoma = "Syötteessä on useita desimaalipisteitä tai useita arvoja: vain yksi liukuluku on sallittu, esim 12.3"
+            arvo = 0
+
         # Muussa tapauksessa selvitetään onko alkuosassa pelkkiä numeroita
         else:
             osa = str(osat[0])
             if osa.isnumeric() == False:
                 virhekoodi = 2
-                virhesanoma = "Syöte sisältää teksiä, ainoastaan numerot ja desimaalipiste ovat sallittuja, esim. 123.5"
+                virhesanoma = "Syöte sisältää tekstiä, ainoastaan numerot ja desimaalipiste ovat sallittuja, esim. 123.5"
                 arvo = 0
-            #
+            # Selvitetään onko loppuosassa pelkkiä numeroita    
             else:
                 osa = str(osat[1])
                 if osa.isnumeric() == False:
-                 virhekoodi = 2
-                 virhesanoma = "Syöte sisältää teksiä, ainoastaan numerot ja desimaalipiste ovat sallittuja, esim. 123.5"
-                #  arvo = 0
-
-    # Jos yksiosainen syöte sisäaltää muutakin kuin pelkkiä numeroita
+                    virhekoodi = 2
+                    virhesanoma = "Syöte sisältää tekstiä, ainoastaan numerot ja desimaalipiste ovat sallittuja, esim. 123.5"
+                    arvo = 0
+                # Jos ei ollut asetetaan arvo ja nollataan virheilmoitukset
+                else:
+                    virhekoodi = 0
+                    virhesanoma = "Syöte OK"
+                    arvo = float(numeroarvo)
+    # Jos yksiosainen syöte sisältää muutakin kuin pelkkiä numeroita
     elif numeroarvo.isnumeric() == False:
         virhekoodi = 2
-        virhesanoma = "Syöte sisältää teksiä, ainoastaan numerot ja desimaalipiste ovat sallittuja, esim. 123.5"
+        virhesanoma = "Syöte sisältää tekstiä, ainoastaan numerot ja desimaalipiste ovat sallittuja, esim. 123.5"
         arvo = 0
-       # virhekoodi = 0
-        # virhesanoma = "Syöte ok"
-    else:
+
+    # Yksiosainen syöte OK
+    else:    
         virhekoodi = 0
-        virhesanoma = "Syöte ok"
+        virhesanoma = "Syöte OK"
         arvo = float(numeroarvo)
 
-
-    # TODO: Muodosta kaksi funktiota: float ja raja-arvotarkistus erillisinä funktioina
-    # 
-    # Muodostetaan ja palautetaan funktion paluuarvo (lista)
+    # TODO: Muodosta kaksi funktiota: float-tarkistus ja raja-arvotarkistus erillisinä funktioina
+                    
+    # Muodostetaan ja palautetaan funktion paluuarvo (lista)        
     tulokset = [virhekoodi, virhesanoma, arvo]
     return tulokset
-
+    
 # Jos sanity.py-tiedostoa ajetaan terminaalissa, suoritetaan testit
 if __name__ == '__main__':
-
-    # Testataan toimintaa
-    # tulos = on_jarkeva('sata', 1, 500)
-    #print(tulos)    
-
-# syote = '10.5'
-# print(syote.strip(), 'kiloa')
+    
+#     Testataan toimintaa
+#     tulos = on_jarkeva('sata', 1, 500)
+#     print(tulos)
+#     syote = ' 10.5   '
+#     print(syote.strip(), 'kiloa')
 
     # Testataan 
     syote = 'sata'
-    print(liukuluku_ok(syote, 0 , 500))
+    print(liukuluku_ok(syote, 0, 500))

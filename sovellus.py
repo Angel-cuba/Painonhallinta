@@ -2,7 +2,7 @@
 
 # Kirjastojen ja modulien käyttöönotot
 import sanity
-from laskenta import bmi
+from laskenta import *
 
 # Varsinaisen pääohjelman alku
 
@@ -17,7 +17,7 @@ while True:
     paino = sanity.on_jarkeva(paino_str, 20, 300)
 
     pituus_str = input('Pituus (m)? ')
-    pituus = sanity.on_jarkeva(pituus_str, 1, 300)
+    pituus = sanity.on_jarkeva(pituus_str, 1, 3)
 
     # print('Painoindeksisi on', bmi(paino, pituus))
     # FIXME: chequear este pedazo............
