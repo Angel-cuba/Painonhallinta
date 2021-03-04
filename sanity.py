@@ -144,4 +144,4 @@ if __name__ == '__main__':
 
     # Testataan 
     syote = 'sata'
-    print(liukuluku_ok(syöte, 0 , 500))
+    print(liukuluku_ok(syote, 0 , 500))
