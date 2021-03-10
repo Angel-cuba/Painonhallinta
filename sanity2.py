@@ -78,12 +78,12 @@ def rajatarkistus(arvo, alaraja, ylaraja):
     # Arvo alle alarajan
     if arvo < alaraja:
         virhekoodi = 1
-        virhesanoma = 'Arvo on alle alarajan'
+        virhesanoma = 'Arvo on alle alarajan (' + str(alaraja) + ')'
         
     # Arvo yli ylärajan
     if arvo > ylaraja:
         virhekoodi = 2
-        virhesanoma = 'Arvo on yli ylärajan'
+        virhesanoma = 'Arvo on yli ylärajan (' + str(alaraja) + ')'
 
     # Paluuarvon määritys ja palautus
     paluuarvo = [virhekoodi, virhesanoma]
